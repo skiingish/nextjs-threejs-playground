@@ -1,58 +1,35 @@
-'use client';
-import { Canvas } from '@react-three/fiber';
-import { useLoader } from '@react-three/fiber';
-import { Stats, Environment, OrbitControls, Loader } from '@react-three/drei';
-import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
-import { Suspense } from 'react';
-import CameraPositionLogger from './helpers/CameraPositionLogger';
-
-const Model = () => {
-  const gltf = useLoader(GLTFLoader, './scene.gltf');
-  return (
-    <>
-      <primitive object={gltf.scene} scale={0.008} position={[0, 0, 0]} rota />
-    </>
-  );
-};
-
-const Plane = () => {
-  return (
-    <mesh position={[0, -1, 0]} rotation={[-Math.PI / 2, 0, 0]}>
-      <planeGeometry attach='geometry' args={[800, 800]} />
-      <meshLambertMaterial attach='material' color='darkgrey' />
-    </mesh>
-  );
-};
+import Link from 'next/link';
 
 export default function Home() {
   return (
-    <main className=' h-[100vh] w-[100vw]'>
-      <h1 className='text-center fixed z-10 right-40 text-black'>
-        three js nextjs + floorplan
-      </h1>
-      <Canvas
-        className=''
-        shadows
-        camera={{ position: [4.5, 300, 495], fov: 25 }}
-      >
-        <Suspense fallback={null}>
-          <OrbitControls />
-          <CameraPositionLogger event='mousedown' />
-
-          {/* <color attach='background' args={['skyblue']} /> */}
-          <spotLight position={[10, 15, 10]} angle={0.8} />
-          <ambientLight intensity={1} />
-          <Environment
-            files='https://cdn.jsdelivr.net/gh/Sean-Bradley/React-Three-Fiber-Boilerplate@environment/public/img/venice_sunset_1k.hdr'
-            background
-            blur={0.5}
-          />
-          <Model />
-          <Plane />
-          <Stats />
-        </Suspense>
-      </Canvas>
-      <Loader />
+    <main className='h-screen flex flex-col justify-center items-center bg-white'>
+      <h1 className='text-center text-black mb-8'>three js nextjs starter</h1>
+      <div className='mt-4 flex flex-col justify-center items-center'>
+        <Link
+          className='text-black bg-slate-500 p-3 hover:text-white rounded-md mb-2 text-center min-w-80' // Add min-w-[200px] class
+          href='/floorplan'
+        >
+          Floorplan
+        </Link>
+        <Link
+          className='text-black bg-slate-500 p-3 hover:text-white rounded-md mb-2 text-center min-w-80' // Add min-w-80 class
+          href='/floorplanhtml'
+        >
+          Floorplan + attached html anchors
+        </Link>
+        <Link
+          className='text-black bg-slate-500 p-3 hover:text-white rounded-md mb-2 text-center min-w-80' // Add min-w-80 class
+          href='/cubes'
+        >
+          Cubes
+        </Link>
+        <Link
+          className='text-black bg-slate-500 p-3 hover:text-white rounded-md mb-2 text-center min-w-80' // Add min-w-80 class
+          href='/r3fdemo'
+        >
+          Frame Animation
+        </Link>
+      </div>
     </main>
   );
 }
